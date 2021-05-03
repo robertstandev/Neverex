@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved)
             {
-                float deltaX = initTouch.position.z - touch.position.z;
+                float deltaX = initTouch.position.x - touch.position.x;
                 transform.RotateAround(Vector3.zero, transform.forward, deltaX * movementSpeed * Time.deltaTime);
                
 
