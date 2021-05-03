@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour {
         {
             PlayerPrefs.SetInt("HighScore", FindObjectOfType<ScoreManager>().score);
         }
+        highScoreText.text = "Best score so far: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
+        endHighScoreText.text = "Best score so far: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
     }
 
     public void AudioCheck()
@@ -77,6 +79,10 @@ public class GameManager : MonoBehaviour {
     {
         actPlayer = GameObject.FindGameObjectWithTag("Player");
         actPlayer.GetComponent<Rigidbody>().isKinematic = false;
+        FindObjectOfType<PlayerMovement>().enabled = true;
+        FindObjectOfType<Spawner>().enabled = true;
+        FindObjectOfType<PlayerParticleController>().enabled = true;
+        FindObjectOfType<PipeMove>().enabled = true;
         scoreText.enabled = true;
         startPanel.SetActive(false);
     }
@@ -89,5 +95,19 @@ public class GameManager : MonoBehaviour {
     public void SkinsBackButton()
     {
         StartPanelActivation();
+    }
+
+    public void AudioButton()
+    {
+        if (PlayerPrefs.GetInt("Audio", 0) == 0)
+            PlayerPrefs.SetInt("Audio", 1);
+        else
+            PlayerPrefs.SetInt("Audio", 0);
+        AudioCheck();
+    }
+
+    public void SkinsButton()
+    {
+        SkinsPanelActivation();
     }
 }
