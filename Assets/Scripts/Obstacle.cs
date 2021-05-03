@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,9 +10,13 @@ public class Obstacle : MonoBehaviour {
     private Rigidbody rb;
     private bool stoppedMoving = false;
 
+    private BoxCollider bc;
+    private Vector3 bcOriginalSize = new Vector3(1.183293f, 0.5000002f, 1.087185f);
+    private Vector3 bcSpecialSize = new Vector3(1.2f, 1.1f, 0.5f);
 
 	void Start () {
         rb = GetComponent<Rigidbody>();
+        bc = GetComponent<BoxCollider>();
         rb.AddForce(transform.forward * -movementSpeed);
 
         if (CompareTag("Prism Instance"))
@@ -48,5 +52,19 @@ public class Obstacle : MonoBehaviour {
                 break;
         }
 
+        bc.size = bcOriginalSize;
+
+        if (CompareTag("Prism Instance"))
+        {
+            transform.Rotate(Vector3.right, -90f);
+        }
+        if (CompareTag("Cube Instance"))
+        {
+            transform.Rotate(Vector3.right, 90f);
+        }
+        if(CompareTag("Sphere Instance"))
+        {
+            bc.size = bcSpecialSize;
+        }
     }
 }
