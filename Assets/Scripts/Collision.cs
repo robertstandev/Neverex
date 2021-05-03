@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,8 +9,17 @@ public class Collision : MonoBehaviour {
     public ParticleSystem collisionParticle, tokenParticle;
     public ParticleSystemRenderer basicParticleRenderer, deathParticleRenderer;
 
+    [HideInInspector]
     public bool gameIsOver = false;
 
+    private MeshFilter playerMesh;
+    private Renderer playerRenderer;
+
+    private void Start()
+    {
+        playerRenderer = GetComponent<Renderer>();
+        playerMesh = GetComponent<MeshFilter>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,6 +29,7 @@ public class Collision : MonoBehaviour {
             {
                 basicParticleRenderer.material = playerRenderer.material = playerMaterials[Random.Range(0, playerMaterials.Length)];
                 GetComponent<Collider>().enabled = false;
+                playerMesh.mesh = meshes[Random.Range(0, meshes.Length)];
                 Invoke("EnableCollider", 0.1f);
                 FindObjectOfType<ScoreManager>().IncrementScore();
                 FindObjectOfType<AudioManager>().ScoreSound();
@@ -59,5 +69,19 @@ public class Collision : MonoBehaviour {
         GetComponent<Rigidbody>().isKinematic = true;
         FindObjectOfType<PlayerMovement>().enabled = false;
         FindObjectOfType<PlayerParticleController>().PlayDeathParticle();
+    }
+
+    public void SpawnCollisionParticle()
+    {
+        ParticleSystem tempParticle = Instantiate(collisionParticle, transform.position, Quaternion.identity);
+        tempParticle.GetComponent<Renderer>().material.color = GetComponent<Renderer>().material.color;
+        tempParticle.Play();
+        Destroy(tempParticle.gameObject, 1f);
+    }
+
+    public void SpawnTokenParticle()
+    {
+        ParticleSystem tokenPar = Instantiate(tokenParticle, transform.position, Quaternion.identity);
+        Destroy(tokenPar.gameObject, 1f);
     }
 }
