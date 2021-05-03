@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
-    public AudioSource backgroundMusic, tokenSound, scoreSound, deathSound;
+    [SerializeField]private AudioSource backgroundMusic, tokenSound, scoreSound, deathSound;
 
     [HideInInspector]
-    public bool soundIsOn = true;
+    private bool soundIsOn = true;
 
     public void StopBackgroundMusic()
     {
@@ -16,24 +16,37 @@ public class AudioManager : MonoBehaviour {
     public void PlayBackgroundMusic()
     {
         if (soundIsOn)
+        {
             backgroundMusic.Play();
+        }
     }
 
     public void TokenSound()
     {
         if(soundIsOn)
+        {
             tokenSound.Play();
+        }
     }
 
     public void ScoreSound()
     {
         if (soundIsOn)
+        {
             scoreSound.Play();
+        }
     }
 
     public void DeathSound()
     {
         if (soundIsOn)
+        {
             deathSound.Play();
+        }
+    }
+
+    public void setSoundOn(bool value)
+    {
+        this.soundIsOn = value;
     }
 }
