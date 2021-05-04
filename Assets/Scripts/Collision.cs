@@ -9,15 +9,30 @@ public class Collision : MonoBehaviour
     [SerializeField]private ParticleSystem collisionParticle, tokenParticle;
     [SerializeField]private ParticleSystemRenderer basicParticleRenderer, deathParticleRenderer;
 
+    private ScoreManager scoreManagerComponent;
+    private AudioManager audioManagerComponent;
+    private PipeMove pipeMoveComponent;
+    private GameManager gameManagerComponent;
+    private Spawner spawnerComponent;
+    private PlayerMovement playerMovementComponent;
+    private PlayerParticleController playerParticleControllerComponent;
+
     private bool gameIsOver = false;
 
     private MeshFilter playerMesh;
     private Renderer playerRenderer;
 
-    private void Start()
+    private void Awake()
     {
         playerRenderer = GetComponent<Renderer>();
         playerMesh = GetComponent<MeshFilter>();
+        scoreManagerComponent = FindObjectOfType<ScoreManager>();
+        audioManagerComponent = FindObjectOfType<AudioManager>();
+        pipeMoveComponent = FindObjectOfType<PipeMove>();
+        gameManagerComponent = FindObjectOfType<GameManager>();
+        spawnerComponent = FindObjectOfType<Spawner>();
+        playerMovementComponent = FindObjectOfType<PlayerMovement>();
+        playerParticleControllerComponent = FindObjectOfType<PlayerParticleController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,18 +45,18 @@ public class Collision : MonoBehaviour
                 GetComponent<Collider>().enabled = false;
                 playerMesh.mesh = meshes[Random.Range(0, meshes.Length)];
                 Invoke("enableCollider", 0.1f);
-                FindObjectOfType<ScoreManager>().incrementScore();
-                FindObjectOfType<AudioManager>().playScoreSound();
+                scoreManagerComponent.incrementScore();
+                audioManagerComponent.playScoreSound();
                 spawnCollisionParticle();
             }
             else
             {
                 gameIsOver = true;
                 deathParticleRenderer.material = playerRenderer.material;
-                FindObjectOfType<PipeMove>().stopPipes();
-                FindObjectOfType<AudioManager>().playDeathSound();
-                FindObjectOfType<GameManager>().endPanelActivation();
-                FindObjectOfType<Spawner>().enabled = false;
+                pipeMoveComponent.stopPipes();
+                audioManagerComponent.playDeathSound();
+                gameManagerComponent.endPanelActivation();
+                spawnerComponent.enabled = false;
                 stopPlayer();
 
                 GetComponent<Collider>().enabled = false;
@@ -49,8 +64,8 @@ public class Collision : MonoBehaviour
         }
         else if (other.CompareTag("Token"))
         {
-            FindObjectOfType<AudioManager>().playTokenSound();
-            FindObjectOfType<ScoreManager>().incrementToken();
+            audioManagerComponent.playTokenSound();
+            scoreManagerComponent.incrementToken();
             Destroy(other.gameObject);
             spawnTokenParticle();
         }
@@ -66,8 +81,8 @@ public class Collision : MonoBehaviour
         GetComponent<Renderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
-        FindObjectOfType<PlayerMovement>().enabled = false;
-        FindObjectOfType<PlayerParticleController>().playDeathParticle();
+        playerMovementComponent.enabled = false;
+        playerParticleControllerComponent.playDeathParticle();
     }
 
     private void spawnCollisionParticle()
