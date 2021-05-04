@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour {
-
-    public float movementSpeed, rotationSpeed;
-    public Mesh[] obstMeshes;
+public class Obstacle : MonoBehaviour
+{
+    [SerializeField]private float movementSpeed, rotationSpeed;
+    [SerializeField]private Mesh[] obstMeshes;
 
     private Rigidbody rb;
     private bool stoppedMoving = false;
@@ -14,27 +14,29 @@ public class Obstacle : MonoBehaviour {
     private Vector3 bcOriginalSize = new Vector3(1.183293f, 0.5000002f, 1.087185f);
     private Vector3 bcSpecialSize = new Vector3(1.2f, 1.1f, 0.5f);
 
-	void Start () {
+	private void Start ()
+    {
         rb = GetComponent<Rigidbody>();
         bc = GetComponent<BoxCollider>();
         rb.AddForce(transform.forward * -movementSpeed);
 
         if (CompareTag("Prism Instance"))
         {
-            ChooseShape();
+            chooseShape();
         }
     }
 	
-	void Update () {
+	private void Update ()
+    {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-        if ((FindObjectOfType<Collision>().gameIsOver) && (!stoppedMoving))
+        if ((FindObjectOfType<Collision>().isGameOver()) && (!stoppedMoving))
         {
             stoppedMoving = true;
             rb.Sleep();
         }
 	}
 
-    public void ChooseShape()
+    private void chooseShape()
     {
         int randomMeshIndex = Random.Range(0, obstMeshes.Length);
         GetComponent<MeshFilter>().mesh = obstMeshes[randomMeshIndex];
