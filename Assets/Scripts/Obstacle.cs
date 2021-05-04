@@ -10,63 +10,80 @@ public class Obstacle : MonoBehaviour
     private Rigidbody rb;
     private bool stoppedMoving = false;
 
+    private Collision collisionComponent;
+    private MainObstacles mainObstaclesComponent;
+
     private BoxCollider bc;
-    private Vector3 bcOriginalSize = new Vector3(1.183293f, 0.5000002f, 1.087185f);
     private Vector3 bcSpecialSize = new Vector3(1.2f, 1.1f, 0.5f);
+
+    private void Awake() {
+        mainObstaclesComponent = transform.parent.GetComponent<MainObstacles>();
+        rb = GetComponent<Rigidbody>();
+        bc = GetComponent<BoxCollider>();
+        collisionComponent = FindObjectOfType<Collision>();
+    }
 
 	private void Start ()
     {
-        rb = GetComponent<Rigidbody>();
-        bc = GetComponent<BoxCollider>();
         rb.AddForce(transform.forward * -movementSpeed);
 
         if (CompareTag("Prism Instance"))
         {
-            chooseShape();
+            checkAndSelectShape();
         }
     }
 	
 	private void Update ()
     {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-        if ((FindObjectOfType<Collision>().isGameOver()) && (!stoppedMoving))
+        if (collisionComponent.isGameOver() && !stoppedMoving)
         {
             stoppedMoving = true;
             rb.Sleep();
         }
 	}
 
-    private void chooseShape()
+    private void checkAndSelectShape()
     {
         int randomMeshIndex = Random.Range(0, obstMeshes.Length);
-        GetComponent<MeshFilter>().mesh = obstMeshes[randomMeshIndex];
 
-        switch (randomMeshIndex)
+        if(mainObstaclesComponent.getCreatedObstacles() == 7 && !mainObstaclesComponent.getHasCube())
+        {
+            randomMeshIndex = 0;
+        }
+        if(mainObstaclesComponent.getCreatedObstacles() == 8 && !mainObstaclesComponent.getHasPrism())
+        {
+            randomMeshIndex = 1;
+        }
+        if(mainObstaclesComponent.getCreatedObstacles() == 9 && !mainObstaclesComponent.getHasSphere())
+        {
+            randomMeshIndex = 2;
+        }
+
+        configureAndCreateShape(randomMeshIndex);
+    }
+
+    private void configureAndCreateShape(int index)
+    {
+        switch (index)
         {
             case 0:
                 tag = "Cube Instance";
+                transform.Rotate(Vector3.right, 90f);
+                mainObstaclesComponent.setHasCube();
                 break;
             case 1:
                 tag = "Prism Instance";
+                transform.Rotate(Vector3.right, -90f);
+                mainObstaclesComponent.setHasPrism();
                 break;
             case 2:
                 tag = "Sphere Instance";
+                bc.size = bcSpecialSize;
+                mainObstaclesComponent.setHasSphere();
                 break;
         }
-
-        bc.size = bcOriginalSize;
-
-        if (CompareTag("Prism Instance"))
-        {
-            transform.Rotate(Vector3.right, -90f);
-        }
-        if (CompareTag("Cube Instance"))
-        {
-            transform.Rotate(Vector3.right, 90f);
-        }
-        if(CompareTag("Sphere Instance"))
-        {
-            bc.size = bcSpecialSize;
-        }
+        GetComponent<MeshFilter>().mesh = obstMeshes[index];
+        mainObstaclesComponent.increaseCreatedObstacles();
     }
 }
