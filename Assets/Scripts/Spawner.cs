@@ -2,28 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour {
+public class Spawner : MonoBehaviour
+{
+    [SerializeField]private GameObject[] obstacles;
+    [SerializeField]private GameObject token;
+    [SerializeField]private float timeBetweenSpawns, timeReduce, minTimeBetweenSpawns;
+    [SerializeField]private int tokenSpawnFrequency = 5;
 
-    public GameObject[] obstacles;
-    public GameObject token;
-    public float timeBetweenSpawns, timeReduce, minTimeBetweenSpawns;
-    public int tokenSpawnFrequency = 5;
-
-	void Start ()
+	private void Start ()
     {
-        Spawn();
+        spawn();
 	}
 
-    public void Spawn()
+    private void spawn()
     {
         Instantiate(obstacles[Random.Range(0, obstacles.Length)], transform.position, Quaternion.identity);
 
-        if (!(FindObjectOfType<Collision>().gameIsOver))
+        if (!(FindObjectOfType<Collision>().isGameOver()))
         {
-            Invoke("Spawn", timeBetweenSpawns);
+            Invoke("spawn", timeBetweenSpawns);
             if (Random.Range(0, tokenSpawnFrequency) == 0)
             {
-                Invoke("SpawnToken", timeBetweenSpawns / 2f);
+                Invoke("spawnToken", timeBetweenSpawns / 2f);
             }
 
         }
@@ -33,7 +33,7 @@ public class Spawner : MonoBehaviour {
             }
     }
 
-    public void SpawnToken()
+    private void spawnToken()
     {
         Instantiate(token, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
     }
