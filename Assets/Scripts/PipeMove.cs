@@ -2,27 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PipeMove : MonoBehaviour {
-
-    public float movementSpeed;
+public class PipeMove : MonoBehaviour
+{
+    [SerializeField]private float movementSpeed;
 
     private Vector3 startPos;
 
-	void Start () {
+	private void Start ()
+    {
         startPos = transform.position;
         GetComponent<Rigidbody>().AddForce(transform.forward * -movementSpeed);
-        Invoke("SetBackToStartPos", 1.32f);
+        Invoke("setBackToStartPos", 1.32f);
 	}
 
-    public void StopPipes()
+    public void stopPipes()
     {
-        CancelInvoke("SetBackToStartPos");
+        CancelInvoke("setBackToStartPos");
         GetComponent<Rigidbody>().Sleep();
     }
 
-    public void SetBackToStartPos()
+    private void setBackToStartPos()
     {
         transform.position = startPos;
-        Invoke("SetBackToStartPos", 1.32f);
+        Invoke("setBackToStartPos", 1.32f);
     }
 }
