@@ -2,30 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainObstacles : MonoBehaviour {
-
+public class MainObstacles : MonoBehaviour
+{
     [SerializeField]private int rotationSpeedMin, rotationSpeedMax;
 
     private int randomRot, rotationSpeed;
 
 	private void Start ()
     {
-        SetRotation();
+        setRotation();
 	}
 	
 	private void Update ()
     {
-        CheckRotation();
-        CheckChildren();
+        checkRotation();
+        checkChildren();
     }
 
-    private void SetRotation()
+    private void setRotation()
     {
         randomRot = Random.Range(0, 4);
         rotationSpeed = Random.Range(rotationSpeedMin, rotationSpeedMax);
     }
 
-    private void CheckRotation()
+    private void checkRotation()
     {
         switch (randomRot)
         {
@@ -38,7 +38,7 @@ public class MainObstacles : MonoBehaviour {
         }
     }
 
-    private void CheckChildren()
+    private void checkChildren()
     {
         if (transform.childCount <= 1)
         {
