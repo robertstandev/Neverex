@@ -290,7 +290,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1470969228}
-        m_MethodName: RestartButton
+        m_MethodName: restartButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2917,7 +2917,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1470969228}
-        m_MethodName: StartButton
+        m_MethodName: startButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4207,7 +4207,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1470969228}
-        m_MethodName: AudioButton
+        m_MethodName: audioButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
