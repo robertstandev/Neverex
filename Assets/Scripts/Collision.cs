@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collision : MonoBehaviour {
+public class Collision : MonoBehaviour
+{
+    [SerializeField]private Mesh[] meshes;
+    [SerializeField]private Material[] playerMaterials;
+    [SerializeField]private ParticleSystem collisionParticle, tokenParticle;
+    [SerializeField]private ParticleSystemRenderer basicParticleRenderer, deathParticleRenderer;
 
-    public Mesh[] meshes;
-    public Material[] playerMaterials;
-    public ParticleSystem collisionParticle, tokenParticle;
-    public ParticleSystemRenderer basicParticleRenderer, deathParticleRenderer;
-
-    [HideInInspector]
-    public bool gameIsOver = false;
+    private bool gameIsOver = false;
 
     private MeshFilter playerMesh;
     private Renderer playerRenderer;
@@ -30,48 +29,48 @@ public class Collision : MonoBehaviour {
                 basicParticleRenderer.material = playerRenderer.material = playerMaterials[Random.Range(0, playerMaterials.Length)];
                 GetComponent<Collider>().enabled = false;
                 playerMesh.mesh = meshes[Random.Range(0, meshes.Length)];
-                Invoke("EnableCollider", 0.1f);
-                FindObjectOfType<ScoreManager>().IncrementScore();
-                FindObjectOfType<AudioManager>().ScoreSound();
-                SpawnCollisionParticle();
+                Invoke("enableCollider", 0.1f);
+                FindObjectOfType<ScoreManager>().incrementScore();
+                FindObjectOfType<AudioManager>().playScoreSound();
+                spawnCollisionParticle();
             }
             else
             {
                 gameIsOver = true;
                 deathParticleRenderer.material = playerRenderer.material;
-                FindObjectOfType<PipeMove>().StopPipes();
-                FindObjectOfType<AudioManager>().DeathSound();
-                FindObjectOfType<GameManager>().EndPanelActivation();
+                FindObjectOfType<PipeMove>().stopPipes();
+                FindObjectOfType<AudioManager>().playDeathSound();
+                FindObjectOfType<GameManager>().endPanelActivation();
                 FindObjectOfType<Spawner>().enabled = false;
-                StopPlayer();
+                stopPlayer();
 
                 GetComponent<Collider>().enabled = false;
             }
         }
         else if (other.CompareTag("Token"))
         {
-            FindObjectOfType<AudioManager>().TokenSound();
-            FindObjectOfType<ScoreManager>().IncrementToken();
+            FindObjectOfType<AudioManager>().playTokenSound();
+            FindObjectOfType<ScoreManager>().incrementToken();
             Destroy(other.gameObject);
-            SpawnTokenParticle();
+            spawnTokenParticle();
         }
     }
 
-    public void EnableCollider()
+    private void enableCollider()
     {
         GetComponent<Collider>().enabled = true;
     }
 
-    public void StopPlayer()
+    private void stopPlayer()
     {
         GetComponent<Renderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         FindObjectOfType<PlayerMovement>().enabled = false;
-        FindObjectOfType<PlayerParticleController>().PlayDeathParticle();
+        FindObjectOfType<PlayerParticleController>().playDeathParticle();
     }
 
-    public void SpawnCollisionParticle()
+    private void spawnCollisionParticle()
     {
         ParticleSystem tempParticle = Instantiate(collisionParticle, transform.position, Quaternion.identity);
         tempParticle.GetComponent<Renderer>().material.color = GetComponent<Renderer>().material.color;
@@ -79,9 +78,14 @@ public class Collision : MonoBehaviour {
         Destroy(tempParticle.gameObject, 1f);
     }
 
-    public void SpawnTokenParticle()
+    private void spawnTokenParticle()
     {
         ParticleSystem tokenPar = Instantiate(tokenParticle, transform.position, Quaternion.identity);
         Destroy(tokenPar.gameObject, 1f);
+    }
+
+    public bool isGameOver()
+    {
+        return this.gameIsOver;
     }
 }
