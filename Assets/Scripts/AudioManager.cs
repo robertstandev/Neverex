@@ -1,19 +1,19 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour {
+public class AudioManager : MonoBehaviour
+{
     [SerializeField]private AudioSource backgroundMusic, tokenSound, scoreSound, deathSound;
 
-    [HideInInspector]
     private bool soundIsOn = true;
 
-    public void StopBackgroundMusic()
+    public void stopBackgroundMusic()
     {
         backgroundMusic.Stop();
     }
 
-    public void PlayBackgroundMusic()
+    public void playBackgroundMusic()
     {
         if (soundIsOn)
         {
@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void TokenSound()
+    public void playTokenSound()
     {
         if(soundIsOn)
         {
@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void ScoreSound()
+    public void playScoreSound()
     {
         if (soundIsOn)
         {
@@ -37,7 +37,7 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void DeathSound()
+    public void playDeathSound()
     {
         if (soundIsOn)
         {
