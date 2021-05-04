@@ -7,6 +7,8 @@ public class MainObstacles : MonoBehaviour
     [SerializeField]private int rotationSpeedMin, rotationSpeedMax;
 
     private int randomRot, rotationSpeed;
+    private bool hasCube, hasPrism, hasSphere;
+    private int createdObstacles;
 
 	private void Start ()
     {
@@ -44,5 +46,39 @@ public class MainObstacles : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void setHasCube()
+    {
+        this.hasCube = true;
+    }
+    public void setHasPrism()
+    {
+        this.hasPrism = true;
+    }
+    public void setHasSphere()
+    {
+        this.hasSphere = true;
+    }
+    public void increaseCreatedObstacles()
+    {
+        this.createdObstacles += 1;
+    }
+
+    public bool getHasCube()
+    {
+        return this.hasCube;
+    }
+    public bool getHasPrism()
+    {
+        return this.hasPrism;
+    }
+    public bool getHasSphere()
+    {
+        return this.hasSphere;
+    }
+    public int getCreatedObstacles()
+    {
+        return this.createdObstacles;
     }
 }
