@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeedMin: 14
-  rotationSpeedMax: 34
+  rotationSpeedMax: 50
 --- !u!1 &1308888960231670
 GameObject:
   m_ObjectHideFlags: 0
