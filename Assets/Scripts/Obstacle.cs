@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +16,8 @@ public class Obstacle : MonoBehaviour
     private BoxCollider bc;
     private Vector3 bcSpecialSize = new Vector3(1.2f, 1.1f, 0.5f);
 
-    private void Awake() {
+    private void Awake()
+    {
         mainObstaclesComponent = transform.parent.GetComponent<MainObstacles>();
         rb = GetComponent<Rigidbody>();
         bc = GetComponent<BoxCollider>();

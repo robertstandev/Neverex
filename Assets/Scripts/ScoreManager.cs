@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -6,17 +6,22 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField]private TextMeshProUGUI scoreText, tokenText;
-
     [SerializeField]private int score = 0;
 
-    private void Start()
+    private Collision collisionComponent;
+    private AudioManager audioManagerComponent;
+
+    private void Awake()
     {
-        tokenText.text = PlayerPrefs.GetInt("Token", 0).ToString();
+        collisionComponent = FindObjectOfType<Collision>();
+        audioManagerComponent = FindObjectOfType<AudioManager>();
     }
+
+    private void Start() { tokenText.text = PlayerPrefs.GetInt("Token", 0).ToString(); }
 
     public void incrementScore()
     {
-        if (FindObjectOfType<Collision>().isGameOver() == false)
+        if (collisionComponent.isGameOver() == false)
         {
             scoreText.text = (++score).ToString();
         }
@@ -24,7 +29,7 @@ public class ScoreManager : MonoBehaviour
 
     public void incrementToken()
     {
-        if (FindObjectOfType<Collision>().isGameOver() == false)
+        if (collisionComponent.isGameOver() == false)
         {
             PlayerPrefs.SetInt("Token", PlayerPrefs.GetInt("Token", 0) + 1);
             tokenText.text = PlayerPrefs.GetInt("Token", 0).ToString();
@@ -35,7 +40,7 @@ public class ScoreManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Token", PlayerPrefs.GetInt("Token", 0) + countOfToken);
         tokenText.text = PlayerPrefs.GetInt("Token", 0).ToString();
-        FindObjectOfType<AudioManager>().playTokenSound();
+        audioManagerComponent.playTokenSound();
     }
 
     private void decrementToken(int decreaseValue)
@@ -44,8 +49,5 @@ public class ScoreManager : MonoBehaviour
         tokenText.text = PlayerPrefs.GetInt("Token", 0).ToString();
     }
 
-    public int getScore()
-    {
-        return this.score;
-    }
+    public int getScore() { return this.score; }
 }

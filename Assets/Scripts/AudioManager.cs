@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,10 +8,7 @@ public class AudioManager : MonoBehaviour
 
     private bool soundIsOn = true;
 
-    public void stopBackgroundMusic()
-    {
-        backgroundMusic.Stop();
-    }
+    public void stopBackgroundMusic() { backgroundMusic.Stop(); }
 
     public void playBackgroundMusic()
     {
@@ -45,8 +42,5 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void setSoundOn(bool value)
-    {
-        this.soundIsOn = value;
-    }
+    public void setSoundOn(bool value) { this.soundIsOn = value; }
 }

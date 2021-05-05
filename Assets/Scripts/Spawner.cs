@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +9,7 @@ public class Spawner : MonoBehaviour
     [SerializeField]private float timeBetweenSpawns, timeReduce, minTimeBetweenSpawns;
     [SerializeField]private int tokenSpawnFrequency = 5;
 
-	private void Start ()
-    {
-        spawn();
-	}
+	private void Start () { spawn(); }
 
     private void spawn()
     {
@@ -33,8 +30,5 @@ public class Spawner : MonoBehaviour
             }
     }
 
-    private void spawnToken()
-    {
-        Instantiate(token, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
-    }
+    private void spawnToken() { Instantiate(token, transform.position, Quaternion.Euler(0f, 0f, Random.Range(0f, 360f))); }
 }

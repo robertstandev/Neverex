@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -71,10 +71,7 @@ public class Collision : MonoBehaviour
         }
     }
 
-    private void enableCollider()
-    {
-        GetComponent<Collider>().enabled = true;
-    }
+    private void enableCollider() { GetComponent<Collider>().enabled = true; }
 
     private void stopPlayer()
     {
@@ -99,8 +96,5 @@ public class Collision : MonoBehaviour
         Destroy(tokenPar.gameObject, 1f);
     }
 
-    public bool isGameOver()
-    {
-        return this.gameIsOver;
-    }
+    public bool isGameOver() { return this.gameIsOver; }
 }

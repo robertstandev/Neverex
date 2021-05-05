@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +9,23 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]private GameObject startPanel, endPanel, muteImage;
     [SerializeField]private TextMeshProUGUI scoreText, highScoreText, endScoreText, endHighScoreText;
+    private AudioManager audioManagerComponent;
+    private PlayerMovement playerMovementComponent;
+    private PlayerParticleController playerParticleControllerComponent;
+    private Spawner spawnerComponent;
+    private PipeMove pipeMoveComponent;
+    private ScoreManager scoreManagerComponent;
 
     private GameObject actPlayer;
+
+    private void Awake() {
+        audioManagerComponent = FindObjectOfType<AudioManager>();
+        playerMovementComponent = FindObjectOfType<PlayerMovement>();
+        playerParticleControllerComponent = FindObjectOfType<PlayerParticleController>();
+        spawnerComponent = FindObjectOfType<Spawner>();
+        pipeMoveComponent = FindObjectOfType<PipeMove>();
+        scoreManagerComponent = FindObjectOfType<ScoreManager>();
+    }
 
 	private void Start () {
         startPanelActivation();
@@ -22,10 +37,10 @@ public class GameManager : MonoBehaviour
     {
         actPlayer = GameObject.FindGameObjectWithTag("Player");
         actPlayer.GetComponent<Rigidbody>().isKinematic = true;
-        FindObjectOfType<PlayerMovement>().enabled = false;
-        FindObjectOfType<PlayerParticleController>().enabled = false;
-        FindObjectOfType<Spawner>().enabled = false;
-        FindObjectOfType<PipeMove>().enabled = false;
+        playerMovementComponent.enabled = false;
+        playerParticleControllerComponent.enabled = false;
+        spawnerComponent.enabled = false;
+        pipeMoveComponent.enabled = false;
         scoreText.enabled = false;
     }
 
@@ -46,9 +61,9 @@ public class GameManager : MonoBehaviour
 
     public void highScoreCheck()
     {
-        if (FindObjectOfType<ScoreManager>().getScore() > PlayerPrefs.GetInt("HighScore", 0))
+        if (scoreManagerComponent.getScore() > PlayerPrefs.GetInt("HighScore", 0))
         {
-            PlayerPrefs.SetInt("HighScore", FindObjectOfType<ScoreManager>().getScore());
+            PlayerPrefs.SetInt("HighScore", scoreManagerComponent.getScore());
         }
         highScoreText.text = "Best score so far: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
         endHighScoreText.text = "Best score so far: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
@@ -59,14 +74,14 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.GetInt("Audio", 0) == 0)
         {
             muteImage.SetActive(false);
-            FindObjectOfType<AudioManager>().setSoundOn(true);
-            FindObjectOfType<AudioManager>().playBackgroundMusic();
+            audioManagerComponent.setSoundOn(true);
+            audioManagerComponent.playBackgroundMusic();
         }
         else
         {
             muteImage.SetActive(true);
-            FindObjectOfType<AudioManager>().setSoundOn(false);
-            FindObjectOfType<AudioManager>().stopBackgroundMusic();
+            audioManagerComponent.setSoundOn(false);
+            audioManagerComponent.stopBackgroundMusic();
         }
     }
 
@@ -74,18 +89,15 @@ public class GameManager : MonoBehaviour
     {
         actPlayer = GameObject.FindGameObjectWithTag("Player");
         actPlayer.GetComponent<Rigidbody>().isKinematic = false;
-        FindObjectOfType<PlayerMovement>().enabled = true;
-        FindObjectOfType<Spawner>().enabled = true;
-        FindObjectOfType<PlayerParticleController>().enabled = true;
-        FindObjectOfType<PipeMove>().enabled = true;
+        playerMovementComponent.enabled = true;
+        spawnerComponent.enabled = true;
+        playerParticleControllerComponent.enabled = true;
+        pipeMoveComponent.enabled = true;
         scoreText.enabled = true;
         startPanel.SetActive(false);
     }
 
-    public void restartButton()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    public void restartButton() { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
 
     public void audioButton()
     {

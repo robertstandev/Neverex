@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,23 +32,11 @@ public class PlayerParticleController : MonoBehaviour
         deathParticle.Play();
     }
 
-    private Color getColor(GameObject obj)
-    {
-        return obj.GetComponent<Renderer>().material.color;
-    }
+    private Color getColor(GameObject obj) { return obj.GetComponent<Renderer>().material.color; }
 
-    private Color getColor(ParticleSystem obj)
-    {
-        return obj.GetComponent<Renderer>().material.color;
-    }
+    private Color getColor(ParticleSystem obj) { return obj.GetComponent<Renderer>().material.color; }
 
-    private void setColor(GameObject obj, Color color)
-    {
-        obj.GetComponent<Renderer>().material.color = color;
-    }
+    private void setColor(GameObject obj, Color color) { obj.GetComponent<Renderer>().material.color = color; }
 
-    private void setColor(ParticleSystem obj, Color color)
-    {
-        obj.GetComponent<Renderer>().material.color = color;
-    }
+    private void setColor(ParticleSystem obj, Color color) { obj.GetComponent<Renderer>().material.color = color; }
 }

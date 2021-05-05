@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private Touch initTouch = new Touch();
     private bool touching = false;
 
-    private void Start()
-    {
-        transform.GetChild(0).GetComponent<Animation>().Play();
-    }
+    private void Start() { transform.GetChild(0).GetComponent<Animation>().Play(); }
 
     private void Update()
     {
