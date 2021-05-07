@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,10 +50,6 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetKey(KeyCode.D))
         {
             transform.RotateAround(Vector3.zero, transform.forward, -computerSpeed * movementSpeed * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
         }
     }
 }

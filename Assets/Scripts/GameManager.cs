@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
 
     private GameObject actPlayer;
 
-    private void Awake() {
+    private void Awake()
+    {
         audioManagerComponent = FindObjectOfType<AudioManager>();
         playerMovementComponent = FindObjectOfType<PlayerMovement>();
         playerParticleControllerComponent = FindObjectOfType<PlayerParticleController>();
@@ -27,7 +28,8 @@ public class GameManager : MonoBehaviour
         scoreManagerComponent = FindObjectOfType<ScoreManager>();
     }
 
-	private void Start () {
+	private void Start ()
+    {
         startPanelActivation();
         highScoreCheck();
         audioCheck();
@@ -98,6 +100,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void restartButton() { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
+
+    public void exitButton() { Application.Quit(); }
 
     public void audioButton()
     {
