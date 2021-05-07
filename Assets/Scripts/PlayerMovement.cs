@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,12 +38,22 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        //PC - remake to new Input system later
-        //Bug on Linux (x64) Ubuntu 16.04+ , Android 5 with New Input System 1.0.2 ==> C++ hooks not deactivating properly
+        /*
+        Remake to new Input system later
+        Bug on Linux (x64) Ubuntu 16.04+ , Android 5 with New Input System 1.0.2 ==> C++ hooks not deactivating properly
+        */
 
         if (Input.GetKey(KeyCode.A))
+        {
             transform.RotateAround(Vector3.zero, transform.forward, computerSpeed * movementSpeed * Time.deltaTime);
+        }
         else if (Input.GetKey(KeyCode.D))
+        {
             transform.RotateAround(Vector3.zero, transform.forward, -computerSpeed * movementSpeed * Time.deltaTime);
+        }
+        else if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }
