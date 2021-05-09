@@ -4763,6 +4763,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -4775,6 +4776,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9547,6 +9549,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9559,6 +9562,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9604,6 +9608,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4565816235259166}
   - component: {fileID: 114369143074300720}
+  - component: {fileID: 462532511}
   m_Layer: 0
   m_Name: Skin1
   m_TagString: Skin
@@ -9618,7 +9623,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897634526521636}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2.53, z: -3.85}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
@@ -9639,8 +9644,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75dc5272bcc1fc49b64445bad9e93c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  computerSpeed: 4.45
-  movementSpeed: -30
+  movementSpeed: 125
+--- !u!114 &462532511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897634526521636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd83beb56779fc3ab969010aa5c27e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementInput:
+    m_Name: Movement Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 9a1b9880-4663-4f28-b2bb-238b90d3d5e6
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 1D Axis
+      m_Id: 25846962-8b92-43f1-b50f-08e314540056
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement Input
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 8d2704e4-72b6-470b-98ad-0319b464aa32
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement Input
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: 0e03b401-12e8-4adf-a952-c83cff1eda70
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement Input
+      m_Flags: 8
 --- !u!1 &1903148551273164
 GameObject:
   m_ObjectHideFlags: 0
@@ -9700,6 +9748,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -9711,6 +9760,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9785,8 +9835,7 @@ MonoBehaviour:
   tokenParticle: {fileID: 198642513258993424, guid: 2e92fa9519576c24eb54fef5eb936191,
     type: 3}
   basicParticleRenderer: {fileID: 199635165362381492}
-  deathParticleRenderer: {fileID: 0}
-  gameIsOver: 0
+  deathParticleRenderer: {fileID: 199570359809138058}
 --- !u!114 &114787645278406936
 MonoBehaviour:
   m_ObjectHideFlags: 0
