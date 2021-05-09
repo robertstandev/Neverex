@@ -1,55 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]private float computerSpeed, movementSpeed;
+    private InputAction movementInput;
+    private float movementValue = 0;
 
-    private Touch initTouch = new Touch();
-    private bool touching = false;
+    private void Awake() {
+        movementInput = GetComponent<IInput>().getMovementInput;
+        movementInput.performed += ctx => OnMove(ctx);
+        movementInput.canceled += ctx => OnMove(ctx);
+    }
+
+    private void OnEnable() { movementInput.Enable(); }
+    private void OnDisable() { movementInput.Disable(); }
+
+    private void OnMove(InputAction.CallbackContext context) { movementValue = context.ReadValue<float>(); }
 
     private void Start() { transform.GetChild(0).GetComponent<Animation>().Play(); }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        foreach (Touch touch in Input.touches)
+        if(movementValue != 0)
         {
-            if (touch.phase == TouchPhase.Began)
-            {
-                if (touching == false)
-                {
-                    touching = true;
-                    initTouch = touch;
-                }
-            }
-            else if (touch.phase == TouchPhase.Moved)
-            {
-                float deltaX = initTouch.position.x - touch.position.x;
-                transform.RotateAround(Vector3.zero, transform.forward, deltaX * movementSpeed * Time.deltaTime);
-               
-
-                initTouch = touch;
-            }
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                initTouch = new Touch();
-                touching = false;
-            }
-        }
-
-        /*
-        Remake to new Input system later
-        Bug on Linux (x64) Ubuntu 16.04+ , Android 5 with New Input System 1.0.2 ==> C++ hooks not deactivating properly
-        */
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.RotateAround(Vector3.zero, transform.forward, computerSpeed * movementSpeed * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.RotateAround(Vector3.zero, transform.forward, -computerSpeed * movementSpeed * Time.deltaTime);
+            transform.RotateAround(Vector3.zero, transform.forward, (movementValue * computerSpeed) * movementSpeed * Time.deltaTime);
         }
     }
 }
